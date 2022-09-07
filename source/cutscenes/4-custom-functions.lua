@@ -1,4 +1,4 @@
--- CUSTOM BEHAVIOR FOR PANEL 2 
+-- CUSTOM BEHAVIOR FOR PANEL 2
 local gfx <const> = playdate.graphics
 
 local maxPosition = 60
@@ -8,7 +8,7 @@ local layerPosition = maxPosition
 -- render is called every frame
 -- render is responsible for drawing the entire panel
 local function renderPanel2(panel, offset)
-	local crankChange = playdate.getCrankChange() 
+	local crankChange = playdate.getCrankChange()
 	layerPosition = layerPosition - (crankChange / 10)
 
 	-- constrain layer position
@@ -27,12 +27,12 @@ local function renderPanel2(panel, offset)
 
 	-- draw the text
 	gfx.drawText("*Crank it up!*", 280, 20)
-	
+
 end
 
 -- advance is called every frame
 local function advancePanel2()
-	if layerPosition <= minPosition then 
+	if layerPosition <= minPosition then
 		return true -- advance to next panel
 	else
 		return false -- stay on this panel
@@ -41,26 +41,24 @@ end
 
 -- reset is called when the panel leaves the screen
 local function resetPanel2()
-	-- reset the layer position 
+	-- reset the layer position
 	-- in case the user navigates back to this panel
 	layerPosition = maxPosition
 end
 
+-- COMIC DATA
 
--- COMIC DATA 
-
-example4 = { 
-	-- sequence 1
-	title = "Ex 4: Custom Functions",
+scene4 = {
+	title = "Scene 4: Custom Functions",
 	scrollType = Panels.ScrollType.AUTO,
-	
+
 	panels = {
 		{ -- panel 1 (normal panel)
 			advanceControl = Panels.Input.A,
 			layers = {
-				{ text = "Example 4", x = 50, y = 70 },
+				{ text = "Scene 4", x = 50, y = 70 },
 				{ text = "Custom Functions", x = 50, y = 100 },
-				{ text = "*Press A to Start...*", x = 50, y = 130, 
+				{ text = "*Press A to Start...*", x = 50, y = 130,
 					effect = { type = Panels.Effect.TYPE_ON, duration = 500, delay = 500 }
 				}
 			}
@@ -72,14 +70,14 @@ example4 = {
 			layers = {
 				{ image = "examples/ex4/1-bg.png", },
 				{ image = "examples/ex4/1-body.png", },
-				{ image = "examples/ex4/1-head.png", name = "head"},
-				{ image = "examples/ex4/1-collar.png"},
+				{ image = "examples/ex4/1-head.png", name = "head" },
+				{ image = "examples/ex4/1-collar.png" },
 			},
 		},
 		{ -- panel 3 (normal panel)
 			layers = {
-				{ text = "Continue...", x = 50, y = 100,  
-					effect = { type = Panels.Effect.TYPE_ON, duration = 300, delay = 500  }
+				{ text = "Continue...", x = 50, y = 100,
+					effect = { type = Panels.Effect.TYPE_ON, duration = 300, delay = 500 }
 				}
 			}
 		}

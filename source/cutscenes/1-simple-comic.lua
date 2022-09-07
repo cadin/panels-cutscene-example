@@ -1,15 +1,15 @@
 -- this is the data for one SEQUENCE
 
-example1 = { 
-	title = "Ex 1: Simple Comic",
+scene1 = {
+	title = "Scene 1: Simple Comic",
 	panels = {
 		{ -- panel 1
 			layers = {
-				{ text = "Example 1", x = 50, y = 100 },
+				{ text = "Scene 1", x = 50, y = 100 },
 				{ text = "A Simple Comic", x = 50, y = 130 }
 			}
 		},
-		{ -- panel 2 
+		{ -- panel 2
 			layers = {
 				{ image = "examples/ex1/sky.png", parallax = 1 },
 				{ image = "examples/ex1/1-mountains.png", parallax = 0.8 },
@@ -26,7 +26,7 @@ example1 = {
 				{ image = "examples/ex1/2-ledge.png", parallax = 0.3 },
 				{ image = "examples/ex1/2-phone.png", parallax = 0.2 },
 			},
-		}, 
+		},
 		{ -- panel 4
 			layers = {
 				{ image = "examples/ex1/sky.png", parallax = 1 },

@@ -4,23 +4,46 @@
 -- you may need to initialize the submodule
 import "libraries/panels/Panels"
 
+-- SETTINGS:
+-- change any settings before calling `startCutscene()`
+Panels.Settings.snapToPanels = false
 
--- EXAMPLE SEQUENCES:
--- look in the `examples` folder for the data files
-import "examples/2-animation.lua"
-import "examples/3-image-transitions"
-
+-- CUTSCENE SEQUENCES:
+-- look in the `cutscenes` folder for the data files
+import "cutscenes/1-simple-comic.lua"
+import "cutscenes/2-animation.lua"
+import "cutscenes/3-image-transitions.lua"
+import "cutscenes/4-custom-functions.lua"
+import "cutscenes/5-audio.lua"
 
 -- COMICDATA FOR CUTSCENES
 -- these are the tables we'll send to Panels for the cutscenes
+-- they contain sequences imported from the files above
 local cutscene1Data = {
-    example2a
+    scene1 -- single SEQUENCE
 }
 
 local cutscene2Data = {
-    example3a,
-    example3b
+    scene2a, scene2b -- this scene has two SEQUENCES
 }
+
+local cutscene3Data = {
+    scene3a, scene3b -- this scene has two SEQUENCES
+}
+
+local cutscene4Data = {
+    scene4 -- single SEQUENCE
+}
+
+local cutscene5Data = {
+    scene5 -- single SEQUENCE
+}
+
+-- a list of all the cutscenes
+local cutscenes = {
+    cutscene1Data, cutscene2Data, cutscene3Data, cutscene4Data, cutscene5Data
+}
+
 
 -- -------------------------------
 -- MAIN GAME
@@ -38,16 +61,19 @@ local y = 100
 local speed = 5
 
 
+-- FUNCTIONS
+
 -- called when Panels finishes playing the current cutscene
 function cutsceneDidFinish()
     -- flip the flag OFF
     cutsceneIsPlaying = false
 
-    -- reapply inputHandlers for main game
+    -- reapply inputHandlers for main game (if used)
     -- playdate.inputHandlers.push(gameInputHandlers)
 
     -- increment the level
     currentLevel = currentLevel + 1
+    if currentLevel > 5 then currentLevel = 1 end -- we only have 5 levels
 end
 
 -- called when a level is completed
@@ -56,12 +82,10 @@ function startCutscene()
     cutsceneIsPlaying = true
 
     -- choose the cutscene data based on the current level
-    local comicData = cutscene1Data
-    if currentLevel % 2 == 0 then
-        comicData = cutscene2Data
-    end
+    local cutsceneNum = currentLevel
+    local comicData = cutscenes[currentLevel]
 
-    -- remove inputHandlers for the main game
+    -- remove inputHandlers for the main game (if used)
     -- playdate.inputHandlers.pop()
 
     -- tell Panels to start the cutscene (with callback)
@@ -71,8 +95,10 @@ end
 -- simple game loop
 -- move a box on screen
 function updateGame()
+    -- update the screen
     playdate.graphics.clear()
-    playdate.graphics.drawText("Level " .. currentLevel, 10, 10)
+    playdate.graphics.drawText("*Level " .. currentLevel .. "*", 20, 10)
+    playdate.graphics.drawText("Press A to complete level", 20, 210)
     playdate.graphics.drawRect(x, y, 10, 10)
 
     -- button input
