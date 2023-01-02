@@ -138,3 +138,7 @@ function playdate.downButtonDown()
         print("down")
     end
 end
+
+-- function playdate.cranked()
+--     print("crank")
+-- end
