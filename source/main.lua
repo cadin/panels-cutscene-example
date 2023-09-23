@@ -15,6 +15,7 @@ import "cutscenes/2-animation.lua"
 import "cutscenes/3-image-transitions.lua"
 import "cutscenes/4-custom-functions.lua"
 import "cutscenes/5-audio.lua"
+import "cutscenes/6-branched-endings.lua"
 
 -- COMICDATA FOR CUTSCENES
 -- these are the tables we'll send to Panels for the cutscenes
@@ -39,9 +40,13 @@ local cutscene5Data = {
     scene5 -- single SEQUENCE
 }
 
+local cutscene6Data = {
+    scene6 -- single SEQUENCE with multiple choice ending
+}
+
 -- a list of all the cutscenes
 local cutscenes = {
-    cutscene1Data, cutscene2Data, cutscene3Data, cutscene4Data, cutscene5Data
+    cutscene1Data, cutscene2Data, cutscene3Data, cutscene4Data, cutscene5Data, cutscene6Data
 }
 
 
@@ -64,7 +69,15 @@ local speed = 5
 -- FUNCTIONS
 
 -- called when Panels finishes playing the current cutscene
-function cutsceneDidFinish()
+function cutsceneDidFinish(target)
+
+    if target then 
+        -- Optional
+        -- for sequences with multiple choice branching endings, 
+        -- Panels will return the `target` of the chosen input
+        print("User chose option: " .. target)
+    end
+
     -- flip the flag OFF
     cutsceneIsPlaying = false
 
@@ -73,7 +86,7 @@ function cutsceneDidFinish()
 
     -- increment the level
     currentLevel = currentLevel + 1
-    if currentLevel > 5 then currentLevel = 1 end -- we only have 5 levels
+    if currentLevel > #cutscenes then currentLevel = 1 end -- loop around to the first level
 end
 
 -- called when a level is completed
